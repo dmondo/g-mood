@@ -2,6 +2,7 @@ node_modules
 /dist/src/components/
 /dist/src/store/
 /dist/server/
+/dist/src/index.js
 /dist/lib/
 /dist/interfaces/
 /dist/bundle.js

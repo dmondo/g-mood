@@ -1,5 +1,6 @@
 interface IState {
   user: string;
+  currentPuzzle: any[];
 }
 
 interface IAction {

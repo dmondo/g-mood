@@ -1,10 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import '../style/Square.css';
+import { Store } from '../store/Store';
 
-const Square = ({ val }): JSX.Element => {
+const Square = ({ val, row, col }): JSX.Element => {
+  const { state, dispatch } = React.useContext(Store);
+  const { currentPuzzle } = state;
+
   const enterVal = (num: number): void => {
-    // keep current puzzle in state, update current puzzle state here
+    console.log('currentpuzzle', currentPuzzle);
+    currentPuzzle[row][col] = num;
+    dispatch({ type: 'PUZZLE', payload: currentPuzzle });
   };
 
   return (
@@ -25,6 +31,8 @@ Square.propTypes = {
     PropTypes.number,
     PropTypes.string,
   ]),
+  row: PropTypes.number.isRequired,
+  col: PropTypes.number.isRequired,
 };
 
 Square.defaultProps = {

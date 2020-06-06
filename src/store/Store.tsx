@@ -2,6 +2,7 @@ import React from 'react';
 
 const initialState: IState = {
   user: '',
+  currentPuzzle: [],
 };
 
 export const Store = React.createContext<IState | any>(initialState);
@@ -10,6 +11,8 @@ const reducer = (state: IState, action: IAction): IState => {
   switch (action.type) {
     case 'USER':
       return { ...state, user: action.payload };
+    case 'PUZZLE':
+      return { ...state, currentPuzzle: action.payload };
     default:
       return state;
   }

@@ -8,7 +8,6 @@ const Square = ({ val, row, col }): JSX.Element => {
   const { currentPuzzle } = state;
 
   const enterVal = (num: number): void => {
-    console.log('currentpuzzle', currentPuzzle);
     currentPuzzle[row][col] = num;
     dispatch({ type: 'PUZZLE', payload: currentPuzzle });
   };

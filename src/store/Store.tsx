@@ -3,6 +3,7 @@ import React from 'react';
 const initialState: IState = {
   user: '',
   currentPuzzle: [],
+  inputSquare: [], // may or may not need to conditionally render input square with different style
 };
 
 export const Store = React.createContext<IState | any>(initialState);

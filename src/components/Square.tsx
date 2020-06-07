@@ -7,9 +7,18 @@ const Square = ({ val, row, col }): JSX.Element => {
   const { state, dispatch } = React.useContext(Store);
   const { currentPuzzle } = state;
 
-  const enterVal = (num: number): void => {
-    currentPuzzle[row][col] = num;
-    dispatch({ type: 'PUZZLE', payload: currentPuzzle });
+  const enterVal = (): void => {
+    const numHandler = (e) => {
+      const pressed = String.fromCharCode(e.keyCode);
+
+      if (!Number.isNaN(Number(pressed))) {
+        currentPuzzle[row][col] = pressed;
+        dispatch({ type: 'PUZZLE', payload: currentPuzzle });
+        document.removeEventListener('keydown', numHandler);
+      }
+    };
+
+    document.addEventListener('keydown', numHandler);
   };
 
   return (
@@ -17,7 +26,7 @@ const Square = ({ val, row, col }): JSX.Element => {
       <button
         className="square"
         type="button"
-        onClick={() => enterVal(1)}
+        onClick={() => enterVal()}
       >
         {val}
       </button>

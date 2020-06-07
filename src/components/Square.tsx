@@ -5,19 +5,33 @@ import { Store } from '../store/Store';
 
 const Square = ({ val, row, col }): JSX.Element => {
   const { state, dispatch } = React.useContext(Store);
-  const { currentPuzzle } = state;
+  const { currentPuzzle, inputSquare } = state;
 
-  const enterVal = (num: number): void => {
-    currentPuzzle[row][col] = num;
-    dispatch({ type: 'PUZZLE', payload: currentPuzzle });
+  const selected = inputSquare[0] === row && inputSquare[1] === col;
+  const inputState = selected ? 'square selected' : 'square';
+
+  const enterVal = (): void => {
+    const numHandler = (e: KeyboardEvent) => {
+      const pressed = String.fromCharCode(e.keyCode);
+
+      if (!Number.isNaN(Number(pressed))) {
+        currentPuzzle[row][col] = pressed;
+        dispatch({ type: 'PUZZLE', payload: currentPuzzle });
+        dispatch({ type: 'INPUT', payload: [] });
+        document.removeEventListener('keydown', numHandler);
+      }
+    };
+
+    dispatch({ type: 'INPUT', payload: [row, col] });
+    document.addEventListener('keydown', numHandler);
   };
 
   return (
     <>
       <button
-        className="square"
+        className={inputState}
         type="button"
-        onClick={() => enterVal(1)}
+        onClick={() => enterVal()}
       >
         {val}
       </button>

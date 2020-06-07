@@ -3,6 +3,7 @@ import React from 'react';
 const initialState: IState = {
   user: '',
   currentPuzzle: [],
+  inputSquare: [], // may or may not need to conditionally render input square with different style
 };
 
 export const Store = React.createContext<IState | any>(initialState);
@@ -13,6 +14,8 @@ const reducer = (state: IState, action: IAction): IState => {
       return { ...state, user: action.payload };
     case 'PUZZLE':
       return { ...state, currentPuzzle: action.payload };
+    case 'INPUT':
+      return { ...state, inputSquare: action.payload };
     default:
       return state;
   }

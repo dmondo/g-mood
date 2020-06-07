@@ -1,49 +1,45 @@
-const validator = (brd: any[][]): boolean => {
-  const board = [...Array(9)].map(() => Array(9).fill(''));
+const isLegalMove = (board: any[][], row: number, col: number, n: number): boolean => {
+  for (let i = 0; i < 9; i += 1) {
+    const sRow = 3 * Math.floor(row / 3) + Math.floor(i / 3);
+    const sCol = 3 * Math.floor(col / 3) + (i % 3);
+    if (board[row][i] === n || board[i][col] === n || board[sRow][sCol] === n) {
+      return false;
+    }
+  }
+  return true;
+};
+
+const isValidBoard = (brd: any[][]): boolean => {
+  const board = brd;
   for (let i = 0; i < 9; i += 1) {
     for (let j = 0; j < 9; j += 1) {
-      board[i][j] = brd[i][j];
+      if (board[i][j] === '') { return false; }
+      const k = board[i][j];
+      board[i][j] = '';
+      if (!isLegalMove(board, i, j, k)) { return false; }
+      board[i][j] = k;
     }
   }
+  return true;
+};
 
-  const isValidRow = (row: any[]): boolean => (
-    row.sort().join('') === '123456789'
-  );
-
-  const validRows = board.map((row) => isValidRow(row))
-    .reduce((accum, val) => accum && val, true);
-
-  const cols = [...Array(9)].map(() => Array(9).fill(''));
-  for (let r = 0; r < 9; r += 1) {
-    for (let c = 0; c < 9; c += 1) {
-      cols[c][r] = brd[r][c];
+const solveBoard = (board: any[][]): number[][] | boolean => {
+  const solved = board;
+  for (let i = 0; i < 9; i += 1) {
+    for (let j = 0; j < 9; j += 1) {
+      if (board[i][j] === '') {
+        for (let k = 1; k <= 9; k += 1) {
+          if (isLegalMove(board, i, j, k)) {
+            solved[i][j] = k;
+            if (solveBoard(solved)) { return solved; }
+            solved[i][j] = '';
+          }
+        }
+        return false;
+      }
     }
   }
-
-  const validCols = cols.map((col) => isValidRow(col))
-    .reduce((accum, val) => accum && val, true);
-
-  // square
-  let validSquares = true;
-  const sections = [[0, 1, 2], [3, 4, 5], [6, 7, 8]];
-
-  sections.forEach((r) => {
-    sections.forEach((c) => {
-      const square = [];
-      r.forEach((y) => {
-        c.forEach((x) => {
-          square.push(brd[y][x]);
-        });
-      });
-      if (!isValidRow(square)) { validSquares = false; }
-    });
-  });
-
-  return validRows && validCols && validSquares;
+  return solved;
 };
 
-const solver = (board: any[][]): number[][] => {
-
-};
-
-export { validator, solver };
+export { isValidBoard, solveBoard };

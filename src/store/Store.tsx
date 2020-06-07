@@ -14,6 +14,8 @@ const reducer = (state: IState, action: IAction): IState => {
       return { ...state, user: action.payload };
     case 'PUZZLE':
       return { ...state, currentPuzzle: action.payload };
+    case 'INPUT':
+      return { ...state, inputSquare: action.payload };
     default:
       return state;
   }

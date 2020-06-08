@@ -42,28 +42,20 @@ const savePuzzle = async (data: IPuzzle, callback: IPuzzleCB): Promise<void> => 
 };
 
 const saveUser = async (data: IUser, callback: ISaveUser): Promise<void> => {
-  console.log('data in db', data);
   const { username, email, password } = data;
   try {
     const userExists = await User.findOne({ email });
-    console.log('userExists', userExists);
     if (userExists) {
       callback(null, 'exists');
       return;
     }
 
-    console.log('CONTINUING??');
-
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
     const newUser = { username, email, password: hash };
 
-    console.log('newUser', newUser);
-
     let user = new User();
     user = Object.assign(user, newUser);
-    console.log('user', user);
-    console.log('SAVING');
     await user.save();
     callback(null, 'saved');
   } catch (err) {
@@ -71,10 +63,23 @@ const saveUser = async (data: IUser, callback: ISaveUser): Promise<void> => {
   }
 };
 
-const findUser = async (email: string, callback: IUserCB): Promise<void> => {
+const findUser = async (data: IVerify, callback: IUserCB): Promise<void> => {
   try {
-    const user = await User.find({ email });
-    callback(null, user.map((doc: mongoose.Document) => doc.toObject()));
+    const { email, password } = data;
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      callback(null, null, 'badUser');
+      return;
+    }
+    // bcrypt verify here
+    const compare = await bcrypt.compare(password, user.toObject().password);
+
+    if (!compare) {
+      callback(null, null, 'badUser');
+    } else {
+      callback(null, { username: user.toObject().username }, 'user');
+    }
   } catch (err) {
     callback(err);
   }

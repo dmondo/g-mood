@@ -8,6 +8,11 @@ const Square = ({
   row,
   col,
   solved,
+}: {
+  val: string|number,
+  row: number,
+  col: number,
+  solved: boolean,
 }): JSX.Element => {
   const { state, dispatch } = React.useContext(Store);
   const { currentPuzzle, inputSquare, listeners } = state;

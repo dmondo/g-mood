@@ -7,7 +7,6 @@ import Login from './Login';
 const App = (): JSX.Element => {
   const { state } = React.useContext(Store);
   const { loginStatus, user } = state;
-
   return (
     <>
       {

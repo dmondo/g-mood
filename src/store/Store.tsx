@@ -30,7 +30,7 @@ const reducer = (state: IState, action: IAction): IState => {
   }
 };
 
-export const StoreProvider = (props: any): JSX.Element => {
+export const StoreProvider = (props: React.Props<React.ReactChild>): JSX.Element => {
   const [state, dispatch] = React.useReducer(reducer, initialState);
   const { children } = props;
   return (

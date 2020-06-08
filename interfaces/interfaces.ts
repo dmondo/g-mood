@@ -7,6 +7,7 @@ interface IState {
   listeners: IKeyListener[];
   loginStatus: boolean;
   failedLogin: boolean;
+  newUser: boolean;
 }
 
 interface IAction {
@@ -24,8 +25,12 @@ interface IPuzzleCB {
   (err: Error, data?: IPuzzle[]): void;
 }
 
+interface IUserName {
+  username: string;
+}
+
 interface IUserCB {
-  (err: Error, data?: IUser[]): void;
+  (err: Error, data?: IUserName, type?: string): void;
 }
 
 interface ISaveUser {
@@ -42,6 +47,11 @@ interface IMListener {
 
 interface IUser {
   username: string;
+  email: string;
+  password: string;
+}
+
+interface IVerify {
   email: string;
   password: string;
 }

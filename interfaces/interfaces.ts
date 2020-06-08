@@ -18,8 +18,12 @@ interface IPuzzle {
   puzzle: (string|number)[][];
 }
 
-interface IExpressCB {
+interface IPuzzleCB {
   (err: Error, data?: IPuzzle[]): void;
+}
+
+interface IUserCB {
+  (err: Error, data?: IUser[]): void;
 }
 
 interface IKeyListener {
@@ -28,4 +32,10 @@ interface IKeyListener {
 
 interface IMListener {
   (e: MouseEvent): void;
+}
+
+interface IUser {
+  username: string;
+  email: string;
+  password: string;
 }

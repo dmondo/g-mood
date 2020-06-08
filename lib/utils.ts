@@ -26,7 +26,6 @@ const isValidBoard = (brd: any[][]): boolean => {
 // TODO frontend indication when board returns itself ie when invalid board state
 const solveBoard = (board: any[][]): number[][] | boolean => {
   const solved = board.map((row) => row.slice());
-  if (!isValidBoard(solved)) { return board; }
 
   const inner = (b: any[][]): boolean => {
     const next = b;

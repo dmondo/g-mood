@@ -9,7 +9,7 @@ for (let i = 0; i < 9; i += 1) {
   keys.push(i);
 }
 
-const Board = ({ solved }): JSX.Element => {
+const Board = ({ solved }: { solved: boolean }): JSX.Element => {
   const { state } = React.useContext(Store);
   let puzzle = state.currentPuzzle;
   if (solved) {
@@ -20,7 +20,7 @@ const Board = ({ solved }): JSX.Element => {
     <>
       <div className="board">
         {
-          puzzle.map((r: any[], i: number) => (
+          puzzle.map((r: (string|number)[], i: number) => (
             <Row vals={r} keys={keys} key={keys[i]} rowKey={keys[i]} solved={solved} />
           ))
         }

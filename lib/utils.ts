@@ -1,4 +1,4 @@
-const isLegalMove = (board: any[][], row: number, col: number, n: number): boolean => {
+const isLegalMove = (board: (string|number)[][], row: number, col: number, n: number): boolean => {
   for (let i = 0; i < 9; i += 1) {
     const sRow = 3 * Math.floor(row / 3) + Math.floor(i / 3);
     const sCol = 3 * Math.floor(col / 3) + (i % 3);
@@ -9,12 +9,12 @@ const isLegalMove = (board: any[][], row: number, col: number, n: number): boole
   return true;
 };
 
-const isValidBoard = (brd: any[][]): boolean => {
+const isValidBoard = (brd: (string|number)[][]): boolean => {
   const board = brd;
   for (let i = 0; i < 9; i += 1) {
     for (let j = 0; j < 9; j += 1) {
       if (board[i][j] === '') { return false; }
-      const k = board[i][j];
+      const k = Number(board[i][j]);
       board[i][j] = '';
       if (!isLegalMove(board, i, j, k)) { return false; }
       board[i][j] = k;
@@ -26,9 +26,8 @@ const isValidBoard = (brd: any[][]): boolean => {
 // TODO frontend indication when board returns itself ie when invalid board state
 const solveBoard = (board: any[][]): number[][] | boolean => {
   const solved = board.map((row) => row.slice());
-  if (!isValidBoard(solved)) { return board; }
 
-  const inner = (b: any[][]): boolean => {
+  const inner = (b: (string|number)[][]): boolean => {
     const next = b;
     for (let i = 0; i < 9; i += 1) {
       for (let j = 0; j < 9; j += 1) {

@@ -1,6 +1,6 @@
 .square {
-  background: #fff;
-  border: 1px solid #999;
+  background: #333;
+  border: 1px solid black;
   float: left;
   font-size: 24px;
   font-weight: bold;
@@ -11,6 +11,7 @@
   padding: 0;
   text-align: center;
   width: 34px;
+  color: white;
 }
 
 .square:focus {
@@ -23,4 +24,8 @@
 
 .selected {
   background-color:	#D3D3D3;
+}
+
+.solved {
+  background-color: #fad0e0;
 }

@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import path from 'path';
 import { getPuzzle, getPuzzles, postPuzzle } from './controllers/puzzles';
-import { getUser, postUser } from './controllers/users';
+import { postAuth, postUser } from './controllers/users';
 
 const router = Router();
 
@@ -15,7 +15,7 @@ router.get('/puzzles/:uuid', getPuzzle);
 
 router.post('/puzzles', postPuzzle);
 
-router.get('/users', getUser);
+router.post('/auth', postAuth);
 
 router.post('/users', postUser);
 

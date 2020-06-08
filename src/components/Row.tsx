@@ -8,11 +8,16 @@ const Row = ({
   keys,
   rowKey,
   solved,
+}: {
+  vals: (string|number)[],
+  keys: number[],
+  rowKey: number,
+  solved: boolean,
 }): JSX.Element => (
   <>
     <div className="row">
       {
-        vals.map((s: any, i: number) => (
+        vals.map((s: string|number, i: number) => (
           <Square val={s} key={keys[i]} row={rowKey} col={keys[i]} solved={solved} />
         ))
       }

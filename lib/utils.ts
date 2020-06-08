@@ -23,22 +23,32 @@ const isValidBoard = (brd: any[][]): boolean => {
   return true;
 };
 
+// TODO frontend indication when board returns itself ie when invalid board state
 const solveBoard = (board: any[][]): number[][] | boolean => {
-  const solved = board;
-  for (let i = 0; i < 9; i += 1) {
-    for (let j = 0; j < 9; j += 1) {
-      if (board[i][j] === '') {
-        for (let k = 1; k <= 9; k += 1) {
-          if (isLegalMove(board, i, j, k)) {
-            solved[i][j] = k;
-            if (solveBoard(solved)) { return solved; }
-            solved[i][j] = '';
+  const solved = board.map((row) => row.slice());
+  if (!isValidBoard(solved)) { return board; }
+
+  const inner = (b: any[][]): boolean => {
+    const next = b;
+    for (let i = 0; i < 9; i += 1) {
+      for (let j = 0; j < 9; j += 1) {
+        if (next[i][j] === '') {
+          for (let k = 1; k <= 9; k += 1) {
+            if (isLegalMove(next, i, j, k)) {
+              solved[i][j] = k;
+              if (inner(next)) { return true; }
+              solved[i][j] = '';
+            }
           }
+          return false;
         }
-        return false;
       }
     }
-  }
+    return true;
+  };
+
+  inner(solved);
+
   return solved;
 };
 

@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
 import Puzzle from './models/puzzles';
 import User from './models/users';
 
@@ -40,12 +41,31 @@ const savePuzzle = async (data: IPuzzle, callback: IPuzzleCB): Promise<void> => 
   }
 };
 
-const saveUser = async (data: IUser, callback: IUserCB): Promise<void> => {
+const saveUser = async (data: IUser, callback: ISaveUser): Promise<void> => {
+  console.log('data in db', data);
+  const { username, email, password } = data;
   try {
+    const userExists = await User.findOne({ email });
+    console.log('userExists', userExists);
+    if (userExists) {
+      callback(null, 'exists');
+      return;
+    }
+
+    console.log('CONTINUING??');
+
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(password, salt);
+    const newUser = { username, email, password: hash };
+
+    console.log('newUser', newUser);
+
     let user = new User();
-    user = Object.assign(user, data);
+    user = Object.assign(user, newUser);
+    console.log('user', user);
+    console.log('SAVING');
     await user.save();
-    callback(null);
+    callback(null, 'saved');
   } catch (err) {
     callback(err);
   }

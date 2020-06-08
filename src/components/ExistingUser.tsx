@@ -82,6 +82,7 @@ const ExistingUser = (): JSX.Element => {
           <TextField
             id="password"
             label="password"
+            type="password"
             color="secondary"
             InputProps={{ className: classes.input }}
           />

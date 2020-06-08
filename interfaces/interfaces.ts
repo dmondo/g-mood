@@ -5,6 +5,8 @@ interface IState {
   inputSquare: number[];
   solution: boolean | number[][];
   listeners: IKeyListener[];
+  loginStatus: boolean;
+  failedLogin: boolean;
 }
 
 interface IAction {
@@ -24,6 +26,10 @@ interface IPuzzleCB {
 
 interface IUserCB {
   (err: Error, data?: IUser[]): void;
+}
+
+interface ISaveUser {
+  (err: Error, type?: string): void;
 }
 
 interface IKeyListener {

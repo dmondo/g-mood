@@ -5,6 +5,9 @@ interface IState {
   inputSquare: number[];
   solution: boolean | number[][];
   listeners: IKeyListener[];
+  loginStatus: boolean;
+  failedLogin: boolean;
+  newUser: boolean;
 }
 
 interface IAction {
@@ -18,8 +21,20 @@ interface IPuzzle {
   puzzle: (string|number)[][];
 }
 
-interface IExpressCB {
+interface IPuzzleCB {
   (err: Error, data?: IPuzzle[]): void;
+}
+
+interface IUserName {
+  username: string;
+}
+
+interface IUserCB {
+  (err: Error, data?: IUserName, type?: string): void;
+}
+
+interface ISaveUser {
+  (err: Error, type?: string): void;
 }
 
 interface IKeyListener {
@@ -28,4 +43,15 @@ interface IKeyListener {
 
 interface IMListener {
   (e: MouseEvent): void;
+}
+
+interface IUser {
+  username: string;
+  email: string;
+  password: string;
+}
+
+interface IVerify {
+  email: string;
+  password: string;
 }

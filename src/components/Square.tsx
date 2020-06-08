@@ -41,7 +41,7 @@ const Square = ({
 
   const enterVal = (): void => {
     if (solved) { return; }
-    listeners.map((listen) => ( // TODO type for listener
+    listeners.map((listen: IKeyListener) => ( // TODO type for listener
       document.removeEventListener('keydown', listen)
     ));
     dispatch({ type: 'LISTEN', payload: [] }); // TODO can change state form arr to fnc?

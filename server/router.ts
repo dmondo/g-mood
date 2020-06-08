@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import path from 'path';
 import { getPuzzle, getPuzzles, postPuzzle } from './controllers/puzzles';
+import { postAuth, postUser } from './controllers/users';
 
 const router = Router();
 
@@ -13,5 +14,9 @@ router.get('/puzzles', getPuzzles);
 router.get('/puzzles/:uuid', getPuzzle);
 
 router.post('/puzzles', postPuzzle);
+
+router.post('/auth', postAuth);
+
+router.post('/users', postUser);
 
 export default router;

@@ -6,19 +6,18 @@ import '../style/App.css';
 import { Store } from '../store/Store';
 import { solveBoard } from '../../lib/utils';
 
-const test = [...Array(9)].map(() => Array(9).fill(''));
-
-test[0][0] = 1;
-test[1][5] = 8;
-
 const App = (): JSX.Element => {
   const { state, dispatch } = React.useContext(Store);
 
   useEffect(() => {
-    const inProgress = test.map((row) => row.slice());
-    const emptySolution = test.map((row) => row.slice());
-    dispatch({ type: 'PUZZLE', payload: inProgress });
-    dispatch({ type: 'START', payload: emptySolution });
+    (async () => {
+      const data = await fetch('/puzzles');
+      const puzzles = await data.json();
+      const inProgress = puzzles[0].puzzle.map((row: (string|number)[]) => row.slice());
+      const emptySolution = puzzles[0].puzzle.map((row: (string|number)[]) => row.slice());
+      dispatch({ type: 'PUZZLE', payload: inProgress });
+      dispatch({ type: 'START', payload: emptySolution });
+    })();
   }, []);
 
   const getSolved = () => {

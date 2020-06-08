@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const validName = (val: string): boolean => (
-  val.length > 2 && val.length < 32
+  val.length >= 2 && val.length < 32
 );
 
 const validEMail = (val: string): boolean => (
@@ -19,7 +19,6 @@ const userSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
-    unique: true,
     validate: validName,
   },
   email: {

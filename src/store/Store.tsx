@@ -7,6 +7,8 @@ const initialState: IState = {
   inputSquare: [],
   solution: false,
   listeners: [],
+  loginStatus: false,
+  failedLogin: false,
 };
 
 export const Store = React.createContext<IState | any>(initialState);
@@ -25,6 +27,10 @@ const reducer = (state: IState, action: IAction): IState => {
       return { ...state, solution: action.payload };
     case 'LISTEN':
       return { ...state, listeners: action.payload };
+    case 'LOGIN':
+      return { ...state, loginStatus: action.payload };
+    case 'FAILED':
+      return { ...state, failedLogin: action.payload };
     default:
       return state;
   }

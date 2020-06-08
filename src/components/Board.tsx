@@ -1,11 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Row from './Row';
 import { Store } from '../store/Store';
-
-const test = [...Array(9)].map(() => Array(9).fill(''));
-
-test[0][0] = 1;
-test[1][5] = 8;
 
 // TODO move to lib
 const keys = [];
@@ -13,25 +9,28 @@ for (let i = 0; i < 9; i += 1) {
   keys.push(i);
 }
 
-const Board = (): JSX.Element => {
-  const { state, dispatch } = React.useContext(Store);
-  const { currentPuzzle } = state;
-
-  useEffect(() => {
-    dispatch({ type: 'PUZZLE', payload: test });
-  }, []);
+const Board = ({ solved }): JSX.Element => {
+  const { state } = React.useContext(Store);
+  let puzzle = state.currentPuzzle;
+  if (solved) {
+    puzzle = state.solution;
+  }
 
   return (
     <>
       <div className="board">
         {
-          currentPuzzle.map((r: any[], i: number) => (
-            <Row vals={r} keys={keys} key={keys[i]} rowKey={keys[i]} />
+          puzzle.map((r: any[], i: number) => (
+            <Row vals={r} keys={keys} key={keys[i]} rowKey={keys[i]} solved={solved} />
           ))
         }
       </div>
     </>
   );
+};
+
+Board.propTypes = {
+  solved: PropTypes.bool.isRequired,
 };
 
 export default Board;

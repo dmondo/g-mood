@@ -23,7 +23,6 @@ const isValidBoard = (brd: (string|number)[][]): boolean => {
   return true;
 };
 
-// TODO frontend indication when board returns itself ie when invalid board state
 const solveBoard = (board: any[][]): number[][] | boolean => {
   const solved = board.map((row) => row.slice());
 
@@ -51,4 +50,9 @@ const solveBoard = (board: any[][]): number[][] | boolean => {
   return solved;
 };
 
-export { isValidBoard, solveBoard };
+const keys = [];
+for (let i = 0; i < 9; i += 1) {
+  keys.push(i);
+}
+
+export { isValidBoard, solveBoard, keys };

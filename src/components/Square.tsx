@@ -41,10 +41,10 @@ const Square = ({
 
   const enterVal = (): void => {
     if (solved) { return; }
-    listeners.map((listen: IKeyListener) => ( // TODO type for listener
+    listeners.map((listen: IKeyListener) => (
       document.removeEventListener('keydown', listen)
     ));
-    dispatch({ type: 'LISTEN', payload: [] }); // TODO can change state form arr to fnc?
+    dispatch({ type: 'LISTEN', payload: [] });
     dispatch({ type: 'INPUT', payload: [row, col] });
     dispatch({ type: 'LISTEN', payload: [...listeners, numHandler] });
     document.addEventListener('keydown', numHandler);

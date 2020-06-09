@@ -10,7 +10,9 @@ const UserPortal = (): JSX.Element => {
   const { state, dispatch } = React.useContext(Store);
   useEffect(() => {
     (async () => {
-      const data = await fetch('/puzzles');
+      const { token } = state;
+      const options = { headers: { 'x-auth-token': token } };
+      const data = await fetch('/puzzles', options);
       const puzzles = await data.json();
       const randomPuzzle = puzzles[Math.floor(Math.random() * puzzles.length)];
       const inProgress = randomPuzzle.puzzle.map((row: (string|number)[]) => row.slice());

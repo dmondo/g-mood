@@ -9,7 +9,7 @@ const initialState: IState = {
   listeners: [],
   loginStatus: false,
   failedLogin: false,
-  newUser: true,
+  newUser: false,
   allPuzzles: [],
   token: '',
 };

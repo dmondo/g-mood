@@ -5,7 +5,6 @@ import User from './models/users';
 
 const cnx = process.env.MONGODB || 'mongodb://localhost/sudokuJS';
 
-// TODO if err, remove obj and research
 mongoose.connect(cnx, {
   useNewUrlParser: true,
   useCreateIndex: true,

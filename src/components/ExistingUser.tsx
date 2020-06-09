@@ -34,31 +34,15 @@ const ExistingUser = (): JSX.Element => {
 
     const result = await fetch(url, options);
 
-    console.log(result);
-
     if (result.status === 200) {
       const verifyUser = await result.json();
 
-      console.log(verifyUser);
       dispatch({ type: 'USER', payload: verifyUser.username });
       dispatch({ type: 'FAILED', payload: false });
       dispatch({ type: 'LOGIN', payload: true });
     } else {
       dispatch({ type: 'FAILED', payload: true });
     }
-
-    // should send email+pass, verify pass on server, return username,
-    // and then set user to logged in and set username to username
-    // also get rid of failed state.
-
-    // const verifyUser = await fetch(url, options);
-    // if (postUser.status === 200) {
-    //   dispatch({ type: 'USER', payload: data.username });
-    //   dispatch({ type: 'LOGIN', payload: true });
-    //   dispatch({ type: 'FAILED', payload: false });
-    // } else {
-    //   dispatch({ type: 'FAILED', payload: true });
-    // }
   };
 
   return (

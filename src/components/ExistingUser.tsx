@@ -37,6 +37,7 @@ const ExistingUser = (): JSX.Element => {
     if (result.status === 200) {
       const verifyUser = await result.json();
 
+      dispatch({ type: 'TOKEN', payload: verifyUser.token });
       dispatch({ type: 'USER', payload: verifyUser.username });
       dispatch({ type: 'FAILED', payload: false });
       dispatch({ type: 'LOGIN', payload: true });

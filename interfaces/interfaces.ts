@@ -8,6 +8,7 @@ interface IState {
   loginStatus: boolean;
   failedLogin: boolean;
   newUser: boolean;
+  allPuzzles: (string|number)[][][];
 }
 
 interface IAction {

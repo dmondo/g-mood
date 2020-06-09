@@ -9,6 +9,7 @@ interface IState {
   failedLogin: boolean;
   newUser: boolean;
   allPuzzles: (string|number)[][][];
+  token: string;
 }
 
 interface IAction {
@@ -31,11 +32,11 @@ interface IUserName {
 }
 
 interface IUserCB {
-  (err: Error, data?: IUserName, type?: string): void;
+  (err: Error, data?: IJWT, type?: string): void;
 }
 
 interface ISaveUser {
-  (err: Error, type?: string): void;
+  (err: Error, type?: any): void;
 }
 
 interface IKeyListener {
@@ -55,4 +56,9 @@ interface IUser {
 interface IVerify {
   email: string;
   password: string;
+}
+
+interface IJWT {
+  username: string;
+  token: any;
 }

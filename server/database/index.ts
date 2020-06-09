@@ -1,7 +1,9 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 import Puzzle from './models/puzzles';
 import User from './models/users';
+import jwtKey from '../../lib/config';
 
 const cnx = process.env.MONGODB || 'mongodb://localhost/sudokuJS';
 
@@ -55,8 +57,18 @@ const saveUser = async (data: IUser, callback: ISaveUser): Promise<void> => {
 
     let user = new User();
     user = Object.assign(user, newUser);
-    await user.save();
-    callback(null, 'saved');
+    const savedUser = await user.save();
+
+    console.log('savedUser', savedUser);
+    console.log('savedUser.id', savedUser.id);
+
+    const token = await jwt.sign(
+      { id: savedUser.id },
+      jwtKey.secret,
+      { expiresIn: 86400 },
+    );
+
+    callback(null, { token });
   } catch (err) {
     callback(err);
   }
@@ -71,13 +83,22 @@ const findUser = async (data: IVerify, callback: IUserCB): Promise<void> => {
       callback(null, null, 'badUser');
       return;
     }
-    // bcrypt verify here
+
     const compare = await bcrypt.compare(password, user.toObject().password);
+
+    console.log('user', user);
+    console.log('user.id', user.id);
+
+    const token = await jwt.sign(
+      { id: user.id },
+      jwtKey.secret,
+      { expiresIn: 86400 },
+    );
 
     if (!compare) {
       callback(null, null, 'badUser');
     } else {
-      callback(null, { username: user.toObject().username }, 'user');
+      callback(null, { username: user.toObject().username, token }, 'user');
     }
   } catch (err) {
     callback(err);

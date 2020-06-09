@@ -35,7 +35,10 @@ const NewUser = (): JSX.Element => {
     };
 
     const postUser = await fetch(url, options);
+
     if (postUser.status === 200) {
+      const userData = await postUser.json();
+      dispatch({ type: 'TOKEN', payload: userData.token });
       dispatch({ type: 'USER', payload: data.username });
       dispatch({ type: 'LOGIN', payload: true });
       dispatch({ type: 'FAILED', payload: false });

@@ -8,13 +8,13 @@ const postUser = (req: Request, res: Response): void => {
     return;
   }
 
-  saveUser(req.body, (err: Error, type?: string) => {
+  saveUser(req.body, (err: Error, token?: string) => {
     if (err) {
       res.sendStatus(500);
-    } else if (type === 'exists') {
+    } else if (token === 'exists') {
       res.status(400).json({ msg: 'user already exists' });
     } else {
-      res.sendStatus(200);
+      res.status(200).json(token);
     }
   });
 };
@@ -26,7 +26,7 @@ const postAuth = (req: Request, res: Response): void => {
     return;
   }
 
-  findUser(req.body, (err: Error, data: IUserName, type: string) => {
+  findUser(req.body, (err: Error, data: IJWT, type: string) => {
     if (err) {
       res.sendStatus(500);
     } else if (type === 'badUser') {

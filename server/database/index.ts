@@ -1,12 +1,23 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 import Puzzle from './models/puzzles';
 import User from './models/users';
 import jwtKey from '../../lib/config';
 
+dotenv.config();
+// const {
+//   MONGO_HOSTNAME,
+//   MONGO_DB,
+//   MONGO_PORT,
+// } = process.env;
+
+// const cnxs = { LOCALURL: `mongodb://${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_DB}` };
+
 const cnx = process.env.MONGODB || 'mongodb://localhost/sudokuJS';
 
+// mongoose.connect(cnxs.LOCALURL, {
 mongoose.connect(cnx, {
   useNewUrlParser: true,
   useCreateIndex: true,
@@ -59,9 +70,6 @@ const saveUser = async (data: IUser, callback: ISaveUser): Promise<void> => {
     user = Object.assign(user, newUser);
     const savedUser = await user.save();
 
-    console.log('savedUser', savedUser);
-    console.log('savedUser.id', savedUser.id);
-
     const token = await jwt.sign(
       { id: savedUser.id },
       jwtKey.secret,
@@ -85,9 +93,6 @@ const findUser = async (data: IVerify, callback: IUserCB): Promise<void> => {
     }
 
     const compare = await bcrypt.compare(password, user.toObject().password);
-
-    console.log('user', user);
-    console.log('user.id', user.id);
 
     const token = await jwt.sign(
       { id: user.id },

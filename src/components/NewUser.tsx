@@ -38,6 +38,10 @@ const NewUser = (): JSX.Element => {
 
     if (postUser.status === 200) {
       const userData = await postUser.json();
+
+      window.localStorage.setItem('sudokuJS', userData.token);
+      window.localStorage.setItem('sudokuName', data.username);
+
       dispatch({ type: 'TOKEN', payload: userData.token });
       dispatch({ type: 'USER', payload: data.username });
       dispatch({ type: 'LOGIN', payload: true });

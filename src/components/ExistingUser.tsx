@@ -37,6 +37,9 @@ const ExistingUser = (): JSX.Element => {
     if (result.status === 200) {
       const verifyUser = await result.json();
 
+      window.localStorage.setItem('sudokuJS', verifyUser.token);
+      window.localStorage.setItem('sudokuName', verifyUser.username);
+
       dispatch({ type: 'TOKEN', payload: verifyUser.token });
       dispatch({ type: 'USER', payload: verifyUser.username });
       dispatch({ type: 'FAILED', payload: false });

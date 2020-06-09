@@ -12,10 +12,12 @@ const UserPortal = (): JSX.Element => {
     (async () => {
       const data = await fetch('/puzzles');
       const puzzles = await data.json();
-      const inProgress = puzzles[0].puzzle.map((row: (string|number)[]) => row.slice());
-      const emptySolution = puzzles[0].puzzle.map((row: (string|number)[]) => row.slice());
+      const randomPuzzle = puzzles[Math.floor(Math.random() * puzzles.length)];
+      const inProgress = randomPuzzle.puzzle.map((row: (string|number)[]) => row.slice());
+      const emptySolution = randomPuzzle.puzzle.map((row: (string|number)[]) => row.slice());
       dispatch({ type: 'PUZZLE', payload: inProgress });
       dispatch({ type: 'START', payload: emptySolution });
+      dispatch({ type: 'PUZZLES', payload: puzzles });
     })();
   }, []);
 
@@ -29,11 +31,18 @@ const UserPortal = (): JSX.Element => {
     dispatch({ type: 'SOLUTION', payload: false });
   };
 
+  const newPuzzle = () => {
+    const { allPuzzles } = state;
+    const rdmPuzzle = allPuzzles[Math.floor(Math.random() * allPuzzles.length)];
+    const inProgress = rdmPuzzle.puzzle.map((row: (string|number)[]) => row.slice());
+    const emptySolution = rdmPuzzle.puzzle.map((row: (string|number)[]) => row.slice());
+    dispatch({ type: 'PUZZLE', payload: inProgress });
+    dispatch({ type: 'START', payload: emptySolution });
+    dispatch({ type: 'SOLUTION', payload: false });
+  };
+
   return (
     <>
-      {/* <div className="title">
-        sudokuJS
-      </div> */}
       <Grid item xs={12}>
         <Grid container justify="flex-start" spacing={2}>
           <Grid item sm={6}>
@@ -44,6 +53,13 @@ const UserPortal = (): JSX.Element => {
               onClick={getSolved}
             >
               solve
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={newPuzzle}
+            >
+              new
             </Button>
           </Grid>
           <Grid item sm={6}>

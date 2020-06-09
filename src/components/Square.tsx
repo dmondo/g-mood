@@ -39,6 +39,14 @@ const Square = ({
     inputState = 'square';
   }
 
+  if (col % 3 === 2 && col !== 8) {
+    inputState += ' right-border';
+  }
+
+  if (row % 3 === 2 && row !== 8) {
+    inputState += ' bottom-border';
+  }
+
   const enterVal = (): void => {
     if (solved) { return; }
     listeners.map((listen: IKeyListener) => (

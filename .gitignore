@@ -9,3 +9,5 @@ node_modules
 /lib/config.ts
 /dist/lib/config.js
 todo.txt
+.env
+dockerfile

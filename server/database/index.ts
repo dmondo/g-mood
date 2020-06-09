@@ -7,17 +7,19 @@ import User from './models/users';
 import jwtKey from '../../lib/config';
 
 dotenv.config();
-// const {
-//   MONGO_HOSTNAME,
-//   MONGO_DB,
-//   MONGO_PORT,
-// } = process.env;
+const {
+  MONGO_HOSTNAME,
+  MONGO_DB,
+  MONGO_PORT,
+} = process.env;
 
-// const cnxs = { LOCALURL: `mongodb://${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_DB}` };
+const cnxs = {
+  LOCALURL: `mongodb://${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_DB}`,
+  DEV: 'mongodb://localhost/sudokuJS',
+};
 
-const cnx = process.env.MONGODB || 'mongodb://localhost/sudokuJS';
+const cnx = cnxs.DEV;
 
-// mongoose.connect(cnxs.LOCALURL, {
 mongoose.connect(cnx, {
   useNewUrlParser: true,
   useCreateIndex: true,

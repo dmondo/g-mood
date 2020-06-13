@@ -9,8 +9,9 @@ const Login = (): JSX.Element => {
   const { state, dispatch } = React.useContext(Store);
   const { newUser } = state;
 
-  const userExists = () => {
+  const userExists = (): void => {
     dispatch({ type: 'NEWUSER', payload: !newUser });
+    dispatch({ type: 'FAILED', payload: false });
   };
 
   return (

@@ -17,7 +17,7 @@ const Square = ({
   const { state, dispatch } = React.useContext(Store);
   const { currentPuzzle, inputSquare, listeners } = state;
 
-  const numHandler = (e: KeyboardEvent) => {
+  const numHandler = (e: KeyboardEvent): void => {
     const pressed = String.fromCharCode(e.keyCode);
 
     if (!Number.isNaN(Number(pressed))) {

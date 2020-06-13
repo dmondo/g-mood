@@ -18,7 +18,7 @@ const ExistingUser = (): JSX.Element => {
   const { state, dispatch } = React.useContext(Store);
   const { failedLogin } = state;
 
-  const verifyAccount = async () => {
+  const verifyAccount = async (): Promise<void> => {
     const data = {
       email: (document.getElementById('email') as HTMLInputElement).value,
       password: (document.getElementById('password') as HTMLInputElement).value,

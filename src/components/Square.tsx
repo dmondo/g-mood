@@ -47,8 +47,14 @@ const Square = ({
     inputState += ' bottom-border';
   }
 
+  const { startingPuzzle } = state;
+  if (startingPuzzle.length && startingPuzzle[row][col] !== '') {
+    inputState += ' starting-square';
+  }
+
   const enterVal = (): void => {
-    if (solved) { return; }
+    const start = startingPuzzle.length && startingPuzzle[row][col] !== '';
+    if (solved || start) { return; }
     listeners.map((listen: IKeyListener) => (
       document.removeEventListener('keydown', listen)
     ));

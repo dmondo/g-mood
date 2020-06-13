@@ -23,23 +23,34 @@ const UserPortal = (): JSX.Element => {
     })();
   }, []);
 
-  const getSolved = () => {
+  const getSolved = (): void => {
     const { startingPuzzle } = state;
     const solvedPuzzle = solveBoard(startingPuzzle);
     dispatch({ type: 'SOLUTION', payload: solvedPuzzle });
   };
 
-  const removeSolved = () => {
+  const removeSolved = (): void => {
     dispatch({ type: 'SOLUTION', payload: false });
   };
 
-  const newPuzzle = () => {
+  const newPuzzle = (): void => {
     const { allPuzzles } = state;
     const rdmPuzzle = allPuzzles[Math.floor(Math.random() * allPuzzles.length)];
     const inProgress = rdmPuzzle.puzzle.map((row: (string|number)[]) => row.slice());
     const emptySolution = rdmPuzzle.puzzle.map((row: (string|number)[]) => row.slice());
     dispatch({ type: 'PUZZLE', payload: inProgress });
     dispatch({ type: 'START', payload: emptySolution });
+    dispatch({ type: 'SOLUTION', payload: false });
+  };
+
+  const logOut = (): void => {
+    window.localStorage.removeItem('sudokuJS');
+    window.localStorage.removeItem('sudokuName');
+    dispatch({ type: 'LOGIN', payload: false });
+    dispatch({ type: 'USER', payload: '' });
+    dispatch({ type: 'TOKEN', payload: '' });
+    dispatch({ type: 'FAILED', payload: false });
+    dispatch({ type: 'NEWUSER', payload: false });
     dispatch({ type: 'SOLUTION', payload: false });
   };
 
@@ -62,6 +73,12 @@ const UserPortal = (): JSX.Element => {
               onClick={newPuzzle}
             >
               new
+            </Button>
+            <Button
+              color="secondary"
+              onClick={logOut}
+            >
+              logout
             </Button>
           </Grid>
           <Grid item sm={6}>

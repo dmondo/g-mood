@@ -1,7 +1,7 @@
 import React from 'react';
 
 const initialState: IState = {
-  user: '',
+  user: 'guest',
   currentPuzzle: [],
   startingPuzzle: [],
   inputSquare: [],

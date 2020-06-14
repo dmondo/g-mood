@@ -46,9 +46,9 @@ const findPuzzle = async (uuid: string, callback: IPuzzleCB): Promise<void> => {
 
 const savePuzzle = async (data: IPuzzle, callback: IPuzzleCB): Promise<void> => {
   try {
-    let puzzle = new Puzzle();
-    puzzle = Object.assign(puzzle, data);
-    await puzzle.save();
+    const { uuid, puzzle } = data;
+    const puzzleDoc = new Puzzle({ uuid, puzzle });
+    await puzzleDoc.save();
     callback(null);
   } catch (err) {
     callback(err);
@@ -66,10 +66,8 @@ const saveUser = async (data: IUser, callback: ISaveUser): Promise<void> => {
 
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
-    const newUser = { username, email, password: hash };
 
-    let user = new User();
-    user = Object.assign(user, newUser);
+    const user = new User({ username, email, password: hash });
     const savedUser = await user.save();
 
     const token = await jwt.sign(

@@ -19,7 +19,7 @@ const NewUser = (): JSX.Element => {
   const { state, dispatch } = React.useContext(Store);
   const { failedLogin } = state;
 
-  const createAccount = async () => {
+  const createAccount = async (): Promise<void> => {
     const data = {
       username: (document.getElementById('username') as HTMLInputElement).value,
       email: (document.getElementById('email') as HTMLInputElement).value,
